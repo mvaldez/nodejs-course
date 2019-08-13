@@ -1,0 +1,17 @@
+env:
+  es6: true
+
+plugins: [fp]
+
+rules:
+  fp/no-mutating-assign: warn
+  fp/no-mutating-methods: warn
+  fp/no-mutation: warn
+  fp/no-let: warn
+  fp/no-this: warn
+  fp/no-loops: warn
+  fp/no-delete: warn
+  max-params:
+    - warn
+    - 2
+  fp/no-throw: warn
