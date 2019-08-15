@@ -46,6 +46,25 @@ app.get('/help', (req, res) => {
     })
 })
 
+app.get('/help/*', (req, res) => {
+    res.render('404', {
+        errorMessage: 'Article not found',
+        name: 'Mark',
+        title: '404'
+    })
+})
+
+// this need to be last route
+// the wildcard will catch any
+// route that has not matched yet
+app.get('*', (req, res) => {
+    res.render('404', {
+        errorMessage: 'Page not found',
+        title: '404',
+        name: 'Mark'
+    })
+})
+
 // server
 app.listen(3000, () => {
     console.log('server listening on port 3000')
