@@ -54,7 +54,7 @@ app.get('/help/*', (req, res) => {
     })
 })
 
-// this need to be last route
+// this needs to be last route
 // the wildcard will catch any
 // route that has not matched yet
 app.get('*', (req, res) => {
