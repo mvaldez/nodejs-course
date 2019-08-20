@@ -6,6 +6,9 @@ const pubDir = path.join(__dirname, '../public')
 const viewDir = path.join(__dirname, '../templates/views')
 const partialsDir = path.join(__dirname, '../templates/partials')
 
+const geocode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
+
 const app = express()
 
 // handle bars
@@ -26,14 +29,33 @@ app.get('', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    if (!req.query.address) {
+    const address = req.query.address
+    if (!address) {
         return res.send({
             error: 'You must provide an address'
         })
     }
-    res.send({
-        forecast: 'Sunny and Hot',
-        address: req.query.address
+
+    geocode(address, (err, {lat, lon, location} = {}) => {
+        if (err) {
+            return res.send({
+                error: err
+            })
+        }
+
+        forecast(lat, lon, (err, {temp, summary}) => {
+            if (err) {
+                return res.send({
+                    error: err
+                })
+            }
+            return res.send({
+                temperature: temp,
+                forecast: summary,
+                location: location,
+                address: address
+            })
+        })
     })
 })
 
